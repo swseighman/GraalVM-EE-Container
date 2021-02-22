@@ -1,7 +1,7 @@
 ## Creating a GraalVM Enterprise Edition Container Image### Overview
 As you continue to explore the many features and benefits of GraalVM Enterprise Edition, you'll likely need a reproducible build environment (with few dependencies) to assist with your testing.  Having a self-contained build process will streamline your development pipeline and help you easily produce native image executables that can be deployed in your container/Kubernetes environment. This tutorial highlights the steps to create a GraalVM Enterprise Edition image which you can leverage for your multi-stage image builds.
 
-**Note**: Throughout this tutorial, when you see a ![red computer](images/userinput.png) icon, it indicates a command that you'll need to enter in your terminal. ###CreditsThe contents of this tutorial is based on a video originally recorded by **Oleg Šelajev**. See [this link](https://www.youtube.com/watch?v=kDpBffInt_Y&list=PLirn7Sv6CJgGEBn0dVaaNojhi_4T3l2PF&index=3).
+**Note**: Throughout this tutorial, when you see a ![red computer](images/userinput.png) icon, it indicates a command that you'll need to enter in your terminal. ### CreditsThe contents of this tutorial is based on a video originally recorded by **Oleg Šelajev**. See [this link](https://www.youtube.com/watch?v=kDpBffInt_Y&list=PLirn7Sv6CJgGEBn0dVaaNojhi_4T3l2PF&index=3).
 
 ### Let's get started!We'll begin with an Oracle Linux 8 (Slim) base image to serve as the foundation for our GraalVM builder image:
 
