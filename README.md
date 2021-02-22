@@ -117,7 +117,7 @@ Check the PATH of the newly committed image using the (v2) image ID.
 
 ![user input](images/userinput.png)
 
-```$ docker inspect -f "{{ .Config.Env }}" d94c75a9582d[PATH=/graalvm-ee-java11-21.0.0.2/bin:apache-maven-3.6.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin]```
+```$ docker inspect -f "{{ .Config.Env }}" d94c75a9582d[PATH=/graalvm-ee-java11-21.0.0.2/bin:/apache-maven-3.6.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin]```
 You can test the PATH by executing a `java` command inside the container.
 
 ![user input](images/userinput.png)
