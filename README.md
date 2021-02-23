@@ -105,7 +105,7 @@ Next, note the container ID of the new image.
 ![user input](images/userinput.png)
 
 ```$ docker ps -aCONTAINER ID   IMAGE         COMMAND     CREATED     STATUS      PORTS     NAMESc78fc9abb86c   48060023630c  "/graalvm-ee-java11-…"  20 minutes ago      Exited (0) 20 minutes```
-Add or append the `java` path to the existing `PATH` in the image and commit the changes (which will create a new image). Be certain to update the tag (v2 in this example).
+Add or append the `java` and `mvn` paths to the existing `PATH` in the image and commit the changes (which will create a new image). Be certain to update the tag (v2 in this example).
 
 ![user input](images/userinput.png)
 
