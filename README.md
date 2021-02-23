@@ -125,5 +125,59 @@ You can test the PATH by executing a `java` command inside the container.
 
 ```$ docker run graalvm-11-ee:v2 java -XshowSettings:vm -versionVM settings:    Max. Heap Size (Estimated): 6.26G    Using VM: Java HotSpot(TM) 64-Bit Server VMjava version "11.0.10" 2021-01-19 LTSJava(TM) SE Runtime Environment GraalVM EE 21.0.0.2 (build 11.0.10+8-LTS-jvmci-21.0-b06)Java HotSpot(TM) 64-Bit Server VM GraalVM EE 21.0.0.2 (build 11.0.10+8-LTS-jvmci-21.0-b06, mixed mode, sharing)```
 
-### Test a native image build
+### Let's test a simple native image build
 
+To make certain our GraalVM Enterprise Edition builder images works as expected, we'll compile a simple application, create a native image executable and deploy the demo application to a container.
+
+First, clone the demo repository and change to the `src` directory:
+
+![user input](images/userinput.png)
+
+```
+$ git clone https://github.com/swseighman/GraalVM-EE-Container.git
+```
+```
+$ cd src
+```
+
+Next, run the application and container build script:
+
+![user input](images/userinput.png)
+
+```
+$ ./container-build.sh
+[+] Building 36.4s (10/10) FINISHED
+ => [internal] load build definition from Dockerfile                                                               0.0s
+ => => transferring dockerfile: 436B                                                                               0.0s
+ => [internal] load .dockerignore                                                                                  0.0s
+ => => transferring context: 2B                                                                                    0.0s
+ => [internal] load metadata for docker.io/library/graalvm-11-ee:v2                                                0.0s
+ => [internal] load build context                                                                                  0.4s
+ => => transferring context: 25.28MB                                                                               0.4s
+ => CACHED [graalvm 1/4] FROM docker.io/library/graalvm-11-ee:v2                                                   0.0s
+ => [graalvm 2/4] COPY . /home/app/graalvm-demo                                                                    0.1s
+ => [graalvm 3/4] WORKDIR /home/app/graalvm-demo                                                                   0.0s
+ => [graalvm 4/4] RUN javac Main.java     && jar --create --file=graalvm-demo.jar --main-class=Main  Main.class   35.7s
+ => [stage-1 1/1] COPY --from=graalvm /home/app/graalvm-demo/graalvm-demo graalvm-demo                             0.0s
+ => exporting to image                                                                                             0.1s
+ => => exporting layers                                                                                            0.0s
+ => => writing image sha256:5e61e56dec6dbfc539688e4c5f6902f27a6a2df8453d5de4d7c491064edf6406                       0.0s
+ => => naming to docker.io/library/graalvm-demo
+```
+![user input](images/userinput.png)
+
+```
+$ docker images
+REPOSITORY             TAG          IMAGE ID         CREATED            SIZE
+graalvm-demo           latest       5e61e56dec6d     16 minutes ago     11MB
+```
+![user input](images/userinput.png)
+
+```
+$ docker run graalvm-demo:latest
+Hello from GraalVM!
+```
+
+### Summary
+
+Congratulations! You successfully completed the process of creating a GraalVM Enterprise Edition builder image you can use for any future application builds.  Plus, you were able to deploy a demo application utilizing the builder image. Feel free to test more complex application builds!
