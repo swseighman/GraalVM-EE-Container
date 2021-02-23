@@ -12,7 +12,8 @@ Inside the base image, install the libraries and utilities we'll need to complet
 
 ![user input](images/userinput.png)
 ```
-# microdnf install tar find gzip gcc glibc-devel zlib-devel
+# microdnf install tar gcc glibc-devel zlib-devel (gzip find)
+# microdnf --enablerepo ol8_codeready_builder install bzip2-devel ed gcc gcc-c++ gcc-gfortran gzip file fontconfig less libcurl-devel make openssl openssl-devel readline-devel tar vi which xz-devel zlib-devel findutils glibc-static libstdc++ libstdc++-devel libstdc++-static zlib-static
 ```
 Next, download the GraalVM Community Edition tar file:
 
@@ -20,40 +21,40 @@ Next, download the GraalVM Community Edition tar file:
 
 For Java 11:
 
-```# curl -L -o graalvm-ce-java11-linux-amd64-21.0.0.2.tar.gz https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.0.0.2/graalvm-ce-java11-linux-amd64-21.0.0.2.tar.gz
+```# curl -L -o graalvm-ce-java11-linux-amd64-21.0.0.tar.gz https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.0.0/graalvm-ce-java11-linux-amd64-21.0.0.tar.gz
 ```
 *Or for Java 8:*
 
 ```
-# curl -L -o graalvm-ce-java8-linux-amd64-21.0.0.2.tar.gz https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.0.0.2/graalvm-ce-java8-linux-amd64-21.0.0.2.tar.gz
+# curl -L -o graalvm-ce-java8-linux-amd64-21.0.0.tar.gz https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.0.0/graalvm-ce-java8-linux-amd64-21.0.0.tar.gz
 ```
 
 Unzip the `tar` file:
 
 ![user input](images/userinput.png)
 
-```# tar -xzf graalvm-ce-java11-linux-amd64-21.0.0.2.tar.gz
+```# tar -xzf graalvm-ce-java11-linux-amd64-21.0.0.tar.gz
 ```
 Since our goal is to install GraalVM Enterprise Edition, we'll perform an in-place upgrade (new in GraalVM 21).  You'll need to answer `Y` to the license agreement and you'll also be prompted to enter your emaill address.
 
 ![user input](images/userinput.png)
-```# /graalvm-ce-java11-21.0.0.2/bin/gu upgrade --edition eeDownloading: Release index file from oca.opensource.oracle.comDownloading: Component catalog for GraalVM Enterprise Edition 21.0.0.2 on jdk11 from oca.opensource.oracle.comDownloading: Component catalog for GraalVM Enterprise Edition 21.0.0 on jdk11 from oca.opensource.oracle.com=========================================================================        Preparing to install GraalVM Core version 21.0.0.2.        Destination directory: /graalvm-ee-java11-21.0.0.2=========================================================================The component(s) GraalVM Core requires to accept the following license: GraalVM Enterprise Edition LicenseEnter "Y" to confirm and accept all the license(s). Enter "R" to the see license text.Any other input will abort installation:  YDownloading: Contents of "GraalVM Enterprise Edition License" from oca.opensource.oracle.comPlease provide an email address (optional). You may want to check Oracle Privacy Policy (https://www.oracle.com/legal/privacy/privacy-policy.html).Enter a valid e-mail address: scott.seighman@oracle.comDownloading: Component core: GraalVM Core  from oca.opensource.oracle.comDownloading: Component org.graalvm: GraalVM Core  from oca.opensource.oracle.comInstalling GraalVM Core version 21.0.0.2 to /graalvm-ee-java11-21.0.0.2...```
+```# /graalvm-ce-java11-21.0.0/bin/gu upgrade --edition eeDownloading: Release index file from oca.opensource.oracle.comDownloading: Component catalog for GraalVM Enterprise Edition 21.0.0 on jdk11 from oca.opensource.oracle.comDownloading: Component catalog for GraalVM Enterprise Edition 21.0.0 on jdk11 from oca.opensource.oracle.com=========================================================================        Preparing to install GraalVM Core version 21.0.0.        Destination directory: /graalvm-ee-java11-21.0.0=========================================================================The component(s) GraalVM Core requires to accept the following license: GraalVM Enterprise Edition LicenseEnter "Y" to confirm and accept all the license(s). Enter "R" to the see license text.Any other input will abort installation:  YDownloading: Contents of "GraalVM Enterprise Edition License" from oca.opensource.oracle.comPlease provide an email address (optional). You may want to check Oracle Privacy Policy (https://www.oracle.com/legal/privacy/privacy-policy.html).Enter a valid e-mail address: scott.seighman@oracle.comDownloading: Component core: GraalVM Core  from oca.opensource.oracle.comDownloading: Component org.graalvm: GraalVM Core  from oca.opensource.oracle.comInstalling GraalVM Core version 21.0.0 to /graalvm-ee-java11-21.0.0...```
 Let's set some environment variables to streamline the reamining GraalVM installation tasks.
 
 ![user input](images/userinput.png)
 
-```# export GRAALVM_HOME=/graalvm-ee-java11-21.0.0.2
-# export JAVA_HOME=$GRAALVM_HOME# export PATH=$GRAALVM_HOME/bin:$PATH# java -versionjava version "11.0.10" 2021-01-19 LTSJava(TM) SE Runtime Environment GraalVM EE 21.0.0.2 (build 11.0.10+8-LTS-jvmci-21.0-b06)Java HotSpot(TM) 64-Bit Server VM GraalVM EE 21.0.0.2 (build 11.0.10+8-LTS-jvmci-21.0-b06, mixed mode, sharing)```
+```# export GRAALVM_HOME=/graalvm-ee-java11-21.0.0
+# export JAVA_HOME=$GRAALVM_HOME# export PATH=$GRAALVM_HOME/bin:$PATH# java -versionjava version "11.0.10" 2021-01-19 LTSJava(TM) SE Runtime Environment GraalVM EE 21.0.0 (build 11.0.10+8-LTS-jvmci-21.0-b06)Java HotSpot(TM) 64-Bit Server VM GraalVM EE 21.0.0 (build 11.0.10+8-LTS-jvmci-21.0-b06, mixed mode, sharing)```
 Install the `native-image` module.  Once again, you'll need to agree to the license terms and enter your email.
 
 ![user input](images/userinput.png)
 
-```# gu install native-imageDownloading: Release index file from oca.opensource.oracle.comDownloading: Component catalog for GraalVM Enterprise Edition 21.0.0.2 on jdk11 from oca.opensource.oracle.comDownloading: Component catalog for GraalVM Enterprise Edition 21.0.0 on jdk11 from oca.opensource.oracle.comSkipping ULN EE channels, no username provided.Downloading: Component catalog from www.graalvm.orgProcessing Component: Native ImageThe component(s) Native Image requires to accept the following license: Oracle GraalVM Enterprise Edition Native Image LicenseEnter "Y" to confirm and accept all the license(s). Enter "R" to the see license text.Any other input will abort installation:  YDownloading: Contents of "Oracle GraalVM Enterprise Edition Native Image License" from oca.opensource.oracle.comPlease provide an email address (optional). You may want to check Oracle Privacy Policy (https://www.oracle.com/legal/privacy/privacy-policy.html).Enter a valid e-mail address: scott.seighman@oracle.comDownloading: Component native-image: Native Image  from oca.opensource.oracle.comInstalling new component: Native Image (org.graalvm.native-image, version 21.0.0.2)```
+```# gu install native-imageDownloading: Release index file from oca.opensource.oracle.comDownloading: Component catalog for GraalVM Enterprise Edition 21.0.0 on jdk11 from oca.opensource.oracle.comDownloading: Component catalog for GraalVM Enterprise Edition 21.0.0 on jdk11 from oca.opensource.oracle.comSkipping ULN EE channels, no username provided.Downloading: Component catalog from www.graalvm.orgProcessing Component: Native ImageThe component(s) Native Image requires to accept the following license: Oracle GraalVM Enterprise Edition Native Image LicenseEnter "Y" to confirm and accept all the license(s). Enter "R" to the see license text.Any other input will abort installation:  YDownloading: Contents of "Oracle GraalVM Enterprise Edition Native Image License" from oca.opensource.oracle.comPlease provide an email address (optional). You may want to check Oracle Privacy Policy (https://www.oracle.com/legal/privacy/privacy-policy.html).Enter a valid e-mail address: scott.seighman@oracle.comDownloading: Component native-image: Native Image  from oca.opensource.oracle.comInstalling new component: Native Image (org.graalvm.native-image, version 21.0.0)```
 In addition, install the `Python` module to round out a (fairly) complete GraalVM image.  LLVM will also be installed as a dependency by default.
 
 ![user input](images/userinput.png)
 
-```# gu install pythonDownloading: Release index file from oca.opensource.oracle.comDownloading: Component catalog for GraalVM Enterprise Edition 21.0.0.2 on jdk11 from oca.opensource.oracle.comDownloading: Component catalog for GraalVM Enterprise Edition 21.0.0 on jdk11 from oca.opensource.oracle.comSkipping ULN EE channels, no username provided.Downloading: Component catalog from www.graalvm.orgProcessing Component: Graal.Python EEProcessing Component: LLVM.org toolchainAdditional Components are required:    LLVM.org toolchain (org.graalvm.llvm-toolchain, version 21.0.0.2), required by: Graal.Python EE (org.graalvm.python)The component(s) Graal.Python EE, LLVM.org toolchain requires to accept the following license: GraalVM Enterprise Edition LicenseEnter "Y" to confirm and accept all the license(s). Enter "R" to the see license text.Any other input will abort installation: YDownloading: Contents of "GraalVM Enterprise Edition License" from oca.opensource.oracle.comDownloading: Component python: Graal.Python EE  from oca.opensource.oracle.comDownloading: Component org.graalvm.llvm-toolchain: LLVM.org toolchain  from oca.opensource.oracle.comInstalling new component: LLVM.org toolchain (org.graalvm.llvm-toolchain, version 21.0.0.2)Installing new component: Graal.Python EE (org.graalvm.python, version 21.0.0.2)IMPORTANT NOTE:---------------Set of GraalVM components that provide language implementations have changed. The Polyglot native image and polyglot native C library may be out of sync:- new languages may not be accessible- removed languages may cause the native binary to fail on missing resources or libraries.To rebuild and refresh the native binaries, use the following command:        /graalvm-ee-java11-21.0.0.2/bin/gu rebuild-images```
+```# gu install pythonDownloading: Release index file from oca.opensource.oracle.comDownloading: Component catalog for GraalVM Enterprise Edition 21.0.0 on jdk11 from oca.opensource.oracle.comDownloading: Component catalog for GraalVM Enterprise Edition 21.0.0 on jdk11 from oca.opensource.oracle.comSkipping ULN EE channels, no username provided.Downloading: Component catalog from www.graalvm.orgProcessing Component: Graal.Python EEProcessing Component: LLVM.org toolchainAdditional Components are required:    LLVM.org toolchain (org.graalvm.llvm-toolchain, version 21.0.0), required by: Graal.Python EE (org.graalvm.python)The component(s) Graal.Python EE, LLVM.org toolchain requires to accept the following license: GraalVM Enterprise Edition LicenseEnter "Y" to confirm and accept all the license(s). Enter "R" to the see license text.Any other input will abort installation: YDownloading: Contents of "GraalVM Enterprise Edition License" from oca.opensource.oracle.comDownloading: Component python: Graal.Python EE  from oca.opensource.oracle.comDownloading: Component org.graalvm.llvm-toolchain: LLVM.org toolchain  from oca.opensource.oracle.comInstalling new component: LLVM.org toolchain (org.graalvm.llvm-toolchain, version 21.0.0)Installing new component: Graal.Python EE (org.graalvm.python, version 21.0.0)IMPORTANT NOTE:---------------Set of GraalVM components that provide language implementations have changed. The Polyglot native image and polyglot native C library may be out of sync:- new languages may not be accessible- removed languages may cause the native binary to fail on missing resources or libraries.To rebuild and refresh the native binaries, use the following command:        /graalvm-ee-java11-21.0.0/bin/gu rebuild-images```
 Check to make certain the modules installed properly.
 
 ![user input](images/userinput.png)
@@ -74,7 +75,7 @@ Exit the image.
 
 ![user input](images/userinput.png)
 
-```# rm -rf graalvm-ce-java11-21.0.0.2/# rm graalvm-ce-java11-linux-amd64-21.0.0.2.tar.gz
+```# rm -rf graalvm-ce-java11-21.0.0/# rm graalvm-ce-java11-linux-amd64-21.0.0.tar.gz
 # rm apache-maven-3.6.3-bin.tar.gz
 # microdnf clean all# exit```
 Once we're satisfied with the our base image, we'll commit the changes to our new GraalVM image.  First, identify the container ID from `oraclelinux:8-slim`, then execute the commit using that container ID.
@@ -109,7 +110,7 @@ Add or append the `java` path to the existing `PATH` in the image and commit the
 
 ![user input](images/userinput.png)
 
-```$ docker commit --change "ENV PATH=/graalvm-ee-java11-21.0.0.2/bin:/apache-maven-3.6.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin JAVA_HOME=/graalvm-ee-java11-21.0.0.2" c78fc9abb86c graalvm-11-ee:v2```
+```$ docker commit --change "ENV PATH=/graalvm-ee-java11-21.0.0/bin:/apache-maven-3.6.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin JAVA_HOME=/graalvm-ee-java11-21.0.0" c78fc9abb86c graalvm-11-ee:v2```
 
 ![user input](images/userinput.png)
 ```$ docker imagesREPOSITORY            TAG         IMAGE ID       CREATED              SIZEgraalvm-11-ee         v2          d94c75a9582d   About a minute ago   2.11GBgraalvm-11-ee         v1          4552add89a43   5 minutes ago        2.11GB```
@@ -117,9 +118,12 @@ Check the PATH of the newly committed image using the (v2) image ID.
 
 ![user input](images/userinput.png)
 
-```$ docker inspect -f "{{ .Config.Env }}" d94c75a9582d[PATH=/graalvm-ee-java11-21.0.0.2/bin:/apache-maven-3.6.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin]```
+```$ docker inspect -f "{{ .Config.Env }}" d94c75a9582d[PATH=/graalvm-ee-java11-21.0.0/bin:/apache-maven-3.6.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin]```
 You can test the PATH by executing a `java` command inside the container.
 
 ![user input](images/userinput.png)
 
 ```$ docker run graalvm-11-ee:v2 java -XshowSettings:vm -versionVM settings:    Max. Heap Size (Estimated): 6.26G    Using VM: Java HotSpot(TM) 64-Bit Server VMjava version "11.0.10" 2021-01-19 LTSJava(TM) SE Runtime Environment GraalVM EE 21.0.0.2 (build 11.0.10+8-LTS-jvmci-21.0-b06)Java HotSpot(TM) 64-Bit Server VM GraalVM EE 21.0.0.2 (build 11.0.10+8-LTS-jvmci-21.0-b06, mixed mode, sharing)```
+
+### Test a native image build
+
