@@ -12,7 +12,6 @@ Inside the base image, install the libraries and utilities we'll need to complet
 
 ![user input](images/userinput.png)
 ```
-# microdnf install tar gcc glibc-devel zlib-devel (gzip find)
 # microdnf --enablerepo ol8_codeready_builder install bzip2-devel ed gcc gcc-c++ gcc-gfortran gzip file fontconfig less libcurl-devel make openssl openssl-devel readline-devel tar vi which xz-devel zlib-devel findutils glibc-static libstdc++ libstdc++-devel libstdc++-static zlib-static
 ```
 Next, download the GraalVM Community Edition tar file:
