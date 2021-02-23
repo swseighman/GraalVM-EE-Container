@@ -92,7 +92,7 @@ That's it!  You now have a GraalVM Enterprise Edition image you can use to build
 ![user input](images/userinput.png)
 
 ```$ docker imagesREPOSITORY            TAG         IMAGE ID       CREATED              SIZEgraalvm-11-ee         v1          4552add89a43   About a minute ago   2.11GB```
-One option you may want to consider is configuring the PATH of your GraalVM image to include the `java bin` directory.
+One option you may want to consider is configuring the PATH of your GraalVM image to include both the `java` and `mvn` bin directories.
 
 Using the image ID from the newly created image, check the current PATH included with the image.  The current path of the image will be displayed.
 
