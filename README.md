@@ -8,6 +8,10 @@ As you continue to explore the many features and benefits of GraalVM Enterprise 
 ![user input](images/userinput.png)
 ```$ docker run -it oraclelinux:8-slim bash
 ```
+
+*Note: you can also use `podman` instead of `docker`.  Assuming you have `podman` installed, simply replace all of the `docker` commands with `podman`.*
+
+
 Inside the base image, install the libraries and utilities we'll need to complete the GraalVM installation:
 
 ![user input](images/userinput.png)
