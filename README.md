@@ -139,6 +139,7 @@ First, clone the demo repository and change to the `src` directory:
 ```
 $ git clone https://github.com/swseighman/GraalVM-EE-Container.git
 ```
+
 ```
 $ cd src
 ```
@@ -167,6 +168,9 @@ $ ./container-build.sh
  => => writing image sha256:5e61e56dec6dbfc539688e4c5f6902f27a6a2df8453d5de4d7c491064edf6406                       0.0s
  => => naming to docker.io/library/graalvm-demo
 ```
+
+**Note:** You can modify the `container-build.sh` script and reference a `Distroless` image if you prefer.  Simply uncomment/comment the appropriate line in the script.
+
 ![user input](images/userinput.png)
 
 ```
